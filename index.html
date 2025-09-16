@@ -3,31 +3,65 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
   <title>Santotrafik</title>
 
-  <!-- Manifest -->
+  <!-- PWA Manifest -->
   <link rel="manifest" href="/Santotrafik/manifest.json" />
-
-  <!-- Theme color for the browser UI -->
   <meta name="theme-color" content="#2196f3" />
 
-  <!-- Fallback icon -->
-  <link rel="icon" href="/Santotrafik/icons/icon-192.png" sizes="192x192" />
+  <!-- Favicon (optional) -->
+  <link rel="icon" href="/Santotrafik/icons/icon-192.png" />
 </head>
-  
 <body>
-  <h1>Welcome to Satotrafik! just some more random text for now</h1>
-  <h2>not so 5 anymore, W</h2>
-  
+  <h1>Welcome to Santotrafik</h1>
+  <h2>Newest attemt to install</h2>
 
+  <!-- Install Button -->
+  <button id="installBtn" style="display: none; padding: 10px 20px; font-size: 1rem;">
+    Install App
+  </button>
+
+  <!-- Register Service Worker & Install Logic -->
   <script>
-    // Register the service worker
+    // Service worker registration
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/satotrafik/service-worker.js')
-        .then(() => console.log('Service Worker registered successfully'))
-        .catch(error => console.log('Service Worker registration failed:', error));
+      navigator.serviceWorker.register('/Santotrafik/service-worker.js')
+        .then(() => console.log('✅ Service Worker registered'))
+        .catch(err => console.error('❌ Service Worker registration failed:', err));
     }
+
+    // Install prompt handling
+    let deferredPrompt;
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      // Prevent Chrome from showing the default prompt
+      e.preventDefault();
+      deferredPrompt = e;
+
+      // Show custom install button
+      const installBtn = document.getElementById('installBtn');
+      installBtn.style.display = 'inline-block';
+
+      installBtn.addEventListener('click', () => {
+        installBtn.style.display = 'none'; // Hide button
+        deferredPrompt.prompt(); // Show install prompt
+
+        deferredPrompt.userChoice.then((choiceResult) => {
+          if (choiceResult.outcome === 'accepted') {
+            console.log('✅ User accepted the install prompt');
+          } else {
+            console.log('❌ User dismissed the install prompt');
+          }
+          deferredPrompt = null;
+        });
+      });
+    });
+
+    // Optionally hide button if app is already installed
+    window.addEventListener('appinstalled', () => {
+      console.log('✅ App was installed');
+      document.getElementById('installBtn').style.display = 'none';
+    });
   </script>
 </body>
 </html>
