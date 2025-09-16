@@ -1,7 +1,7 @@
 {
   "name": "Santotrafik",
   "short_name": "Sanfik",
-  "start_url": "/",
+  "start_url": "/Santotrafik/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#2196f3",
