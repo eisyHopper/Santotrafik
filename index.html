@@ -1,1 +1,31 @@
-<h1>This is just text for now</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Santotrafik</title>
+
+  <!-- Manifest -->
+  <link rel="manifest" href="/santotrafik/manifest.json" />
+
+  <!-- Theme color for the browser UI -->
+  <meta name="theme-color" content="#2196f3" />
+
+  <!-- Fallback icon -->
+  <link rel="icon" href="/satotrafik/icons/icon-192.png" sizes="192x192" />
+</head>
+  
+<body>
+  <h1>Welcome to Satotrafik!</h1>
+
+  <script>
+    // Register the service worker
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/satotrafik/service-worker.js')
+        .then(() => console.log('Service Worker registered successfully'))
+        .catch(error => console.log('Service Worker registration failed:', error));
+    }
+  </script>
+</body>
+</html>
